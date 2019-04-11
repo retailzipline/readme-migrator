@@ -21,11 +21,20 @@ class BlockTest < Minitest::Test
     assert block.id
   end
 
-  def test_should_return_correct_html_for_the_block
-    block = Block.new(load_block_fixture('embed.md'))
-    html = "<a href=\"https://google.com\">Meet Google Drive</a>"
+  %w[
+    api-header
+    callout
+    embed
+    html
+    image
+    parameters
+  ].each do |type|
+    define_method("test_should_parse_#{type}_block") do
+      expectation = load_block_fixture("#{type}.html").chomp
+      block = Block.new(load_block_fixture("#{type}.md"))
 
-    assert_equal html, block.to_html
+      assert_equal expectation, block.to_html
+    end
   end
 
   private

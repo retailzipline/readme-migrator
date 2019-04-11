@@ -1,8 +1,8 @@
-require 'kramdown'
 require 'securerandom'
 require 'json'
 require 'erb'
 require 'front_matter_parser'
+require 'kramdown'
 require 'kramdown-parser-gfm'
 
 class Block
@@ -18,7 +18,7 @@ class Block
   end
 
   def to_html
-    ERB.new(template).result(OpenStruct.new(attributes).instance_eval { binding })
+    ERB.new(template, nil, '-').result(OpenStruct.new(attributes).instance_eval { binding }).chomp
   end
 
   def type
@@ -36,13 +36,13 @@ class Block
   end
 
   def extract_attributes
-    attrs = JSON.parse(@content.scan(/\[block\:[a-z\-]+\]([^\[]*)\[\/block\]/).last.first)
+    attrs = JSON.parse(@content.scan(/\[block\:[a-z\-]+\](.*?)\[\/block\]/mix).last.first)
     attrs['permalink'] ||= parameterize(attrs['title'] || '')
     attrs
   end
 
   def template
-    File.read(File.join(File.dirname(__FILE__), 'src', 'templates', "#{type}.erb")).chomp
+    File.read(File.join(File.dirname(__FILE__), 'templates', "#{type}.erb")).chomp
   end
 
   def parameterize(string, sep = '-')

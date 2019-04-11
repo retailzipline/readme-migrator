@@ -1,1 +1,13 @@
-<p>PARAMETERS</p>
+<div class="magic-block-parameters">
+  <div class="block-parameters-table">
+    <div class="table">
+<% 1.upto(rows.to_i) do |row| -%>
+      <div class="tr">
+<% 1.upto(cols.to_i) do |col| -%>
+        <div class="td"><%= [row,col].join('-') %></div>
+<% end -%>
+      </div>
+<% end -%>
+    </div>
+  </div>
+</div>
