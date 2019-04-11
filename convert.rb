@@ -42,7 +42,7 @@ class Block
 
   def extract_attributes
     attrs = JSON.parse(@content.scan(/\[block\:[a-z\-]+\]([^\[]*)\[\/block\]/).last.first)
-    attrs['permalink'] ||= parameterize(attrs['title'])
+    attrs['permalink'] ||= parameterize(attrs['title'] || '')
     attrs
   end
 
@@ -67,7 +67,7 @@ class Block
 end
 
 class BlockParser
-  BLOCK_REGEX = /(\[block\:[a-z\-]+\][^\[]*\[\/block\])/mix.freeze
+  BLOCK_REGEX = /(\[block\:[a-z\-]+\].*?\[\/block\])/mix.freeze
 
   def initialize(content)
     @content = content
@@ -88,7 +88,9 @@ class ReadmeFile
   end
 
   def to_html
-    output = @content.gsub(/#([^#\ ])/, '# \1')
+    output = @content
+      .gsub(/#([^#\ ])/, '# \1')
+      .gsub(/^\-([^\-\ ])/, '- \1')
 
     blocks.each do |block|
       output.sub!(block.raw, block.to_html)
