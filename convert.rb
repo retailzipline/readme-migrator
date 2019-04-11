@@ -23,7 +23,7 @@ class Block
   end
 
   def to_html
-    ERB.new(TEMPLATE).result(OpenStruct.new(attributes).instance_eval { binding })
+    ERB.new(template).result(OpenStruct.new(attributes).instance_eval { binding })
   end
 
   def type
@@ -41,7 +41,28 @@ class Block
   end
 
   def extract_attributes
-    JSON.parse(@content.scan(/\[block\:[a-z\-]+\]([^\[]*)\[\/block\]/).last.first)
+    attrs = JSON.parse(@content.scan(/\[block\:[a-z\-]+\]([^\[]*)\[\/block\]/).last.first)
+    attrs['permalink'] ||= parameterize(attrs['title'])
+    attrs
+  end
+
+  def template
+    File.read(File.join(File.dirname(__FILE__), 'src', 'templates', "#{type}.erb")).chomp
+  end
+
+  def parameterize(string, sep = '-')
+    # replace accented chars with their ascii equivalents
+    parameterized_string = string.dup
+    # Turn unwanted chars into the separator
+    parameterized_string.gsub!(/[^a-z0-9\-_]+/i, sep)
+    unless sep.nil? || sep.empty?
+      re_sep = Regexp.escape(sep)
+      # No more than one of the separator in a row.
+      parameterized_string.gsub!(/#{re_sep}{2,}/, sep)
+      # Remove leading/trailing separator.
+      parameterized_string.gsub!(/^#{re_sep}|#{re_sep}$/, '')
+    end
+    parameterized_string.downcase
   end
 end
 
