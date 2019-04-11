@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../../convert.rb'
+require_relative '../../src/readme-migrator'
 
 class ReadmeFileTest < Minitest::Test
   def test_should_convert_a_readme_file_to_html

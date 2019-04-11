@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../../convert.rb'
+require_relative '../../src/readme-migrator'
 
 class BlockParserTest < Minitest::Test
   def test_should_extract_multiple_blocks_from_content

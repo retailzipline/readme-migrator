@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '../../convert.rb'
+require_relative '../../src/readme-migrator'
 
 class BlockTest < Minitest::Test
   def test_should_extract_the_correct_type
