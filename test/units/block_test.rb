@@ -14,13 +14,6 @@ class BlockTest < Minitest::Test
     assert_equal content, block.raw
   end
 
-  def test_should_have_an_id
-    content = load_block_fixture('embed.md')
-    block = Block.new(content)
-
-    assert block.id
-  end
-
   %w[
     api-header
     callout

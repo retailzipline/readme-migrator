@@ -6,10 +6,7 @@ require 'kramdown'
 require 'kramdown-parser-gfm'
 
 class Block
-  attr_reader :id
-
   def initialize(content)
-    @id = SecureRandom.hex(10)
     @content = content
   end
 
@@ -84,12 +81,13 @@ class ReadmeFile
 
   def to_html
     output = @content
-      .gsub(/#([^#\ ])/, '# \1')
-      .gsub(/^\-([^\-\ ])/, '- \1')
 
     blocks.each do |block|
       output.sub!(block.raw, block.to_html)
     end
+
+    output.gsub!(/^(#+)([^#\ ])/, '\1 \2')
+    output.gsub!(/^\-([^\-\ ])/, '- \1')
 
     Kramdown::Document.new(output, input: 'GFM').to_html
   end

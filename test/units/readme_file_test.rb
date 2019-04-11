@@ -2,9 +2,16 @@ require 'minitest/autorun'
 require_relative '../../src/readme-migrator'
 
 class ReadmeFileTest < Minitest::Test
-  def test_should_convert_a_readme_file_to_html
+  def test_should_convert_a_basic_readme_file_to_html
     expectation = load_readme_fixture('basic.html')
     readme = ReadmeFile.new(readme_fixture_path('basic.md'))
+
+    assert_equal expectation, readme.to_html
+  end
+
+  def test_should_convert_a_complex_readme_file_to_html
+    expectation = load_readme_fixture('complex.html')
+    readme = ReadmeFile.new(readme_fixture_path('complex.md'))
 
     assert_equal expectation, readme.to_html
   end

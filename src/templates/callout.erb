@@ -1,6 +1,6 @@
 <div class="magic-block-callout type-<%= type %> ">
   <h3><i title="Warning" class="fa fa-exclamation-circle"></i><%= title %></h3>
   <div class="callout-body">
-    <p><%= body %></p>
+    <%= Kramdown::Document.new(body, input: 'GFM').to_html -%>
   </div>
 </div>
