@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    front_matter_parser (0.2.0)
+    kramdown (2.1.0)
+    kramdown-parser-gfm (1.0.1)
+      kramdown (~> 2.0)
+    minitest (5.11.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  front_matter_parser
+  kramdown-parser-gfm
+  minitest
+
+BUNDLED WITH
+   1.16.1
