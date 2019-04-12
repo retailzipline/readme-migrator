@@ -73,9 +73,11 @@ class BlockParser
 end
 
 class ReadmeFile
+  attr_reader :front_matter
+
   def initialize(file)
     @file = FrontMatterParser::Parser.parse_file(file)
-    @meta = @file.front_matter
+    @front_matter = @file.front_matter
     @content = @file.content
   end
 

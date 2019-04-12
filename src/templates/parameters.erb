@@ -1,10 +1,15 @@
 <div class="magic-block-parameters">
   <div class="block-parameters-table">
     <table>
-<% 1.upto(rows.to_i) do |row| -%>
       <tr>
-<% 1.upto(cols.to_i) do |col| -%>
-        <td><%= [row,col].join('-') %></td>
+<% 0.upto(cols.to_i - 1) do |col| -%>
+        <th><%= data[['h',col].join('-')] %></th>
+<% end -%>
+      </tr>
+<% 0.upto(rows.to_i - 1) do |row| -%>
+      <tr>
+<% 0.upto(cols.to_i - 1) do |col| -%>
+        <td><%= data[[row,col].join('-')] %></td>
 <% end -%>
       </tr>
 <% end -%>

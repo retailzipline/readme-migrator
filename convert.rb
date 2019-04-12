@@ -4,7 +4,7 @@ require 'fileutils'
 require_relative './src/readme-migrator'
 
 Dir.glob("casper/v1.0/**/*.md") do |my_text_file|
-  export_file_path = File.join("exports", my_text_file.sub('.md', '.html'))
+  export_file_path = File.join("exports", my_text_file.sub('casper/v1.0/', '').sub('.md', '.html'))
 
   dirname = File.dirname(export_file_path)
   unless File.directory?(dirname)
