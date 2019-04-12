@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require_relative '../src/readme-migrator'
+
+source_root_dir = ARGV[0]
+
+unless source_root_dir && File.directory?(source_root_dir)
+  puts "Usage: convert_to_html DIRNAME"
+  exit(0)
+end
+
+Dir.glob(File.join(source_root_dir, "**/*.md")) do |file|
+  export_file_path = File.join("exports", file.sub(source_root_dir, '').sub('.md', '.html'))
+
+  dirname = File.dirname(export_file_path)
+  unless File.directory?(dirname)
+    print "Creating directory #{dirname}... "
+    FileUtils.mkdir_p(dirname)
+    puts "Done"
+  end
+
+  File.open(export_file_path, "w") do |io|
+    print "Converting #{file} -> #{export_file_path}... "
+    io.write ReadmeFile.new(file).to_html
+    puts "Done"
+  end
+end
