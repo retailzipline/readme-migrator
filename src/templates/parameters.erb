@@ -1,18 +1,16 @@
-<div class="magic-block-parameters">
-  <div class="block-parameters-table">
-    <table>
-      <tr>
+<div class="table">
+  <table>
+    <tr>
 <% 0.upto(cols.to_i - 1) do |col| -%>
-        <th><%= data[['h',col].join('-')] %></th>
+      <th><%= Kramdown::Document.new(data[['h',col].join('-')] || '', input: 'GFM').to_html %></th>
 <% end -%>
-      </tr>
+    </tr>
 <% 0.upto(rows.to_i - 1) do |row| -%>
-      <tr>
+    <tr>
 <% 0.upto(cols.to_i - 1) do |col| -%>
-        <td><%= data[[row,col].join('-')] %></td>
+      <td><%= Kramdown::Document.new(data[[row,col].join('-')] || '', input: 'GFM').to_html %></td>
 <% end -%>
-      </tr>
+    </tr>
 <% end -%>
-    </table>
-  </div>
+  </table>
 </div>

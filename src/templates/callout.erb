@@ -1,6 +1,14 @@
-<div class="magic-block-callout type-<%= type %> ">
-  <h3><i title="Warning" class="fa fa-exclamation-circle"></i><%= title %></h3>
-  <div class="callout-body">
+<%
+styles = {
+  danger: { bgcolor: "#fdf7f7", fgcolor: "#d9534f", icon: "glyphicon-warning-sign" },
+  warning: { bgcolor: "#fcf8f2", fgcolor: "#f0ad4e", icon: "glyphicon-exclamation-sign" },
+  info: { bgcolor: "#e3edf2", fgcolor: "#5bc0de", icon: "glyphicon-info-sign" },
+  success: { bgcolor: "#f3f8f3", fgcolor: "#50af51", icon: "glyphicon-ok-sign" }
+}
+%>
+<div style="font-size: 0.8em; border-left: 4px solid red; padding: 13px 13px 13px 23px; position: relative; margin-bottom: 3em; background-color: <%= styles[type.to_sym][:bgcolor] %>; border-color: <%= styles[type.to_sym][:fgcolor] %>;">
+  <h3 style="color: <%= styles[type.to_sym][:fgcolor] %>;" class="mt-0"><i title="<%= type %>" class="glyphicon <%= styles[type.to_sym][:icon] %>"></i> <%= title %></h3>
+  <div>
     <%= Kramdown::Document.new(body || '', input: 'GFM').to_html -%>
   </div>
 </div>

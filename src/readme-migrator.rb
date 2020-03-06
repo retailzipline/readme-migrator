@@ -1,6 +1,7 @@
 require 'securerandom'
 require 'json'
 require 'erb'
+require 'yaml'
 require 'front_matter_parser'
 require 'kramdown'
 require 'kramdown-parser-gfm'
@@ -78,6 +79,7 @@ class ReadmeFile
   def initialize(file)
     @file = FrontMatterParser::Parser.parse_file(file)
     @front_matter = @file.front_matter
+    @front_matter['path'] = File.dirname(file)
     @content = @file.content
   end
 
@@ -88,14 +90,35 @@ class ReadmeFile
       output.sub!(block.raw, block.to_html)
     end
 
+    # Fix headers that are missing a space between the # and the first character
     output.gsub!(/^(#+)([^#\ ])/, '\1 \2')
+    # Fix list items that don't have a space between the hyphen and the first character
     output.gsub!(/^\-([^\-\ ])/, '- \1')
 
+    # [
+    #   frontmatter_output,
+    #   Kramdown::Document.new(output, input: 'GFM').to_html
+    # ].join("\n")
+
     Kramdown::Document.new(output, input: 'GFM').to_html
+  end
+
+  def updated_frontmatter
+    {
+      id: nil,
+      locale: 'en',
+      distribution_list_id: nil,
+      security_role_id: nil,
+      parent_id: nil,
+      visit_count: 0
+    }.merge(front_matter).compact.map { |key, v| [key.to_s, v] }.to_h
+  end
+
+  def frontmatter_output
+    "#{YAML.dump(updated_frontmatter)}---"
   end
 
   def blocks
     BlockParser.new(@content).call
   end
 end
-

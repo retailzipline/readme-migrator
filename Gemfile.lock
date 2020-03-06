@@ -6,6 +6,7 @@ GEM
     kramdown-parser-gfm (1.0.1)
       kramdown (~> 2.0)
     minitest (5.11.3)
+    rubyzip (1.2.2)
 
 PLATFORMS
   ruby
@@ -14,6 +15,7 @@ DEPENDENCIES
   front_matter_parser
   kramdown-parser-gfm
   minitest
+  rubyzip
 
 BUNDLED WITH
    1.16.1
