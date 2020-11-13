@@ -2,10 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     front_matter_parser (0.2.0)
-    kramdown (2.1.0)
+    kramdown (2.3.0)
+      rexml
     kramdown-parser-gfm (1.0.1)
       kramdown (~> 2.0)
     minitest (5.11.3)
+    rexml (3.2.4)
     rubyzip (1.2.2)
 
 PLATFORMS
